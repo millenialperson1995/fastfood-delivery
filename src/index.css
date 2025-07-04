@@ -54,3 +54,14 @@ code {
   z-index: 20;
   animation: fly-to-cart 0.7s ease-in-out forwards;
 }
+
+/* Animações de Destaque para o Carrinho */
+@keyframes flash {
+  0% { background-color: transparent; }
+  25% { background-color: rgba(250, 204, 21, 0.3); } /* Amarelo com 30% de opacidade */
+  100% { background-color: transparent; }
+}
+
+.flash-animation {
+  animation: flash 0.7s ease-out;
+}

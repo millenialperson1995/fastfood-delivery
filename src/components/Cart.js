@@ -1,16 +1,27 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import { TrashIcon, ShoppingCartIcon } from './icons';
 import { Link } from 'react-router-dom';
 
 function Cart() {
-  const { cartItems, updateCart, removeFromCart } = useCart();
+  // lastChangedId será usado para aplicar a animação
+  const { cartItems, updateCart, removeFromCart, lastChangedId } = useCart();
+  const [isFlashing, setIsFlashing] = useState(null);
 
   const { subtotal, total } = useMemo(() => {
     const sub = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const tax = sub > 0 ? 2.50 : 0;
     return { subtotal: sub, total: sub + tax };
   }, [cartItems]);
+
+  // Ativa a animação quando um item muda
+  useEffect(() => {
+    if (lastChangedId) {
+      setIsFlashing(lastChangedId);
+      const timer = setTimeout(() => setIsFlashing(null), 700); // Duração da animação
+      return () => clearTimeout(timer);
+    }
+  }, [lastChangedId, cartItems]); // Re-acionar se o ID ou os itens mudarem
 
   return (
     <div className="w-full bg-gray-800 rounded-xl shadow-2xl p-6 lg:p-8">
@@ -30,7 +41,7 @@ function Cart() {
         <>
           <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
             {cartItems.map(item => (
-              <div key={item.id} className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+              <div key={item.id} className={`flex items-center justify-between bg-gray-700 p-3 rounded-lg ${isFlashing === item.id ? 'flash-animation' : ''}`}>
                 <div className="flex items-center">
                     <img src={item.image} alt={item.name} className="w-16 h-16 rounded-md object-cover mr-4"/>
                     <div>
@@ -52,7 +63,7 @@ function Cart() {
             ))}
           </div>
 
-          <div className="border-t border-gray-700 mt-6 pt-6 space-y-3">
+          <div className={`border-t border-gray-700 mt-6 pt-6 space-y-3 ${isFlashing ? 'flash-animation' : ''}`}>
             <div className="flex justify-between text-gray-300">
               <span>Subtotal</span>
               <span>R$ {subtotal.toFixed(2).replace('.', ',')}</span>

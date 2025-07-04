@@ -15,6 +15,9 @@ export const CartProvider = ({ children }) => {
       return [];
     }
   });
+  
+  // Novo estado para rastrear a última alteração
+  const [lastChangedId, setLastChangedId] = useState(null);
 
   useEffect(() => {
     try {
@@ -26,7 +29,7 @@ export const CartProvider = ({ children }) => {
 
   const handleAddToCart = (itemToAdd) => {
     const existingItem = cartItems.find(item => item.id === itemToAdd.id);
-    const quantityToAdd = itemToAdd.quantity || 1; // Default to 1 if no quantity is provided
+    const quantityToAdd = itemToAdd.quantity || 1;
 
     if (existingItem) {
       setCartItems(prevItems => prevItems.map(item =>
@@ -37,6 +40,7 @@ export const CartProvider = ({ children }) => {
       setCartItems(prevItems => [...prevItems, { ...itemToAdd, quantity: quantityToAdd }]);
       toast.success(`${quantityToAdd}x ${itemToAdd.name} adicionado(s) ao carrinho!`);
     }
+    setLastChangedId(itemToAdd.id + Date.now()); // Adiciona timestamp para re-acionar a animação
   };
 
   const handleUpdateCart = (itemId, newQuantity) => {
@@ -49,6 +53,7 @@ export const CartProvider = ({ children }) => {
         )
       );
     }
+    setLastChangedId(itemId + Date.now());
   };
 
   const handleRemoveFromCart = (itemId) => {
@@ -57,6 +62,7 @@ export const CartProvider = ({ children }) => {
     if (removedItem) {
       toast.error(`${removedItem.name} removido do carrinho.`);
     }
+    setLastChangedId(itemId + Date.now());
   };
 
   const totalItemsInCart = useMemo(() => {
@@ -66,6 +72,7 @@ export const CartProvider = ({ children }) => {
   const value = {
     cartItems,
     totalItemsInCart,
+    lastChangedId, // Exporta o novo estado
     addToCart: handleAddToCart,
     updateCart: handleUpdateCart,
     removeFromCart: handleRemoveFromCart,
