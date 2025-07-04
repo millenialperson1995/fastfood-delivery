@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
-import { useCart } from '../context/CartContext'; // Importa o hook
+import { useCart } from '../context/CartContext';
 import { TrashIcon, ShoppingCartIcon } from './icons';
+import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 // --- Componente do Carrinho ---
-function Cart() { // Remove as props
-  // Pega tudo o que precisa do contexto do carrinho
+function Cart() { 
   const { cartItems, updateCart, removeFromCart } = useCart();
     
   const { subtotal, total } = useMemo(() => {
@@ -12,13 +13,6 @@ function Cart() { // Remove as props
     const tax = sub > 0 ? 2.50 : 0; 
     return { subtotal: sub, total: sub + tax };
   }, [cartItems]);
-
-  const handlePlaceOrder = () => {
-      console.log("Pedido finalizado:", { cartItems, total });
-      alert(`Pedido finalizado com sucesso! Total: R$ ${total.toFixed(2).replace('.', ',')}`);
-      // Limpa o carrinho usando a função do contexto
-      cartItems.forEach(item => removeFromCart(item.id));
-  };
 
   return (
     <div className="lg:w-2/5 xl:w-1/3 w-full bg-gray-800 rounded-xl shadow-2xl p-6 sticky top-8">
@@ -70,12 +64,12 @@ function Cart() { // Remove as props
             </div>
           </div>
 
-          <button 
-            onClick={handlePlaceOrder}
-            className="w-full mt-6 bg-green-600 text-white font-bold py-3 rounded-lg text-lg hover:bg-green-500 transition-colors duration-300"
+          <Link 
+            to="/checkout"
+            className="w-full mt-6 bg-green-600 text-white font-bold py-3 rounded-lg text-lg hover:bg-green-500 transition-colors duration-300 block text-center"
           >
             Finalizar Pedido
-          </button>
+          </Link>
         </>
       )}
     </div>
