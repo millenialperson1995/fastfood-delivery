@@ -3,12 +3,9 @@ import toast from 'react-hot-toast';
 
 const CART_STORAGE_KEY = 'fastfood:cart';
 
-// 1. Cria o Contexto
 const CartContext = createContext();
 
-// 2. Cria o componente Provedor
 export const CartProvider = ({ children }) => {
-  // Tenta carregar o carrinho do localStorage ao iniciar
   const [cartItems, setCartItems] = useState(() => {
     try {
       const storedCart = localStorage.getItem(CART_STORAGE_KEY);
@@ -19,7 +16,6 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  // Salva o carrinho no localStorage sempre que ele for alterado
   useEffect(() => {
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
@@ -30,14 +26,16 @@ export const CartProvider = ({ children }) => {
 
   const handleAddToCart = (itemToAdd) => {
     const existingItem = cartItems.find(item => item.id === itemToAdd.id);
+    const quantityToAdd = itemToAdd.quantity || 1; // Default to 1 if no quantity is provided
+
     if (existingItem) {
       setCartItems(prevItems => prevItems.map(item =>
-        item.id === itemToAdd.id ? { ...item, quantity: item.quantity + 1 } : item
+        item.id === itemToAdd.id ? { ...item, quantity: item.quantity + quantityToAdd } : item
       ));
-      toast.success(`Mais um ${itemToAdd.name} adicionado!`);
+      toast.success(`${quantityToAdd}x ${itemToAdd.name} adicionado(s)!`);
     } else {
-      setCartItems(prevItems => [...prevItems, { ...itemToAdd, quantity: 1 }]);
-      toast.success(`${itemToAdd.name} adicionado ao carrinho!`);
+      setCartItems(prevItems => [...prevItems, { ...itemToAdd, quantity: quantityToAdd }]);
+      toast.success(`${quantityToAdd}x ${itemToAdd.name} adicionado(s) ao carrinho!`);
     }
   };
 
@@ -65,7 +63,6 @@ export const CartProvider = ({ children }) => {
     return cartItems.reduce((sum, item) => sum + item.quantity, 0);
   }, [cartItems]);
 
-  // O valor que será fornecido para os componentes filhos
   const value = {
     cartItems,
     totalItemsInCart,
@@ -77,7 +74,6 @@ export const CartProvider = ({ children }) => {
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
-// 3. Cria um hook customizado para consumir o contexto
 export const useCart = () => {
   const context = useContext(CartContext);
   if (context === undefined) {

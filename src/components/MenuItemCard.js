@@ -1,19 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 function MenuItemCard({ item }) {
   const { addToCart } = useCart();
+  const [isFlying, setIsFlying] = useState(false);
 
   const handleAddToCart = (e) => {
-    e.preventDefault(); // Impede a navegação ao clicar no botão
-    e.stopPropagation(); // Impede a propagação do evento para o Link
+    e.preventDefault();
+    e.stopPropagation();
     addToCart(item);
+
+    // Inicia a animação
+    setIsFlying(true);
+    setTimeout(() => {
+      setIsFlying(false);
+    }, 700); // Duração da animação
   };
 
   return (
     <Link to={`/produto/${item.id}`} className="block bg-gray-800 rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
       <div className="relative">
+        {isFlying && (
+          <div className="fly-to-cart-animation">
+            <img 
+              className="w-full h-48 object-cover rounded-xl" 
+              src={item.image} 
+              alt={`Imagem animada de ${item.name}`}
+            />
+          </div>
+        )}
         <img 
           className="w-full h-48 object-cover" 
           src={item.image} 

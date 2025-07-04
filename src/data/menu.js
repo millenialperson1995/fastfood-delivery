@@ -5,6 +5,7 @@ const menuItems = [
     description: 'Pão brioche, hambúrguer de 150g, queijo cheddar, alface, tomate e nosso molho especial.',
     price: 25.50,
     image: 'https://placehold.co/600x400/f97316/white?text=Burger',
+    category: 'Hambúrgueres',
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ const menuItems = [
     description: 'Porção generosa de batatas fritas sequinhas e crocantes, temperadas com sal.',
     price: 12.00,
     image: 'https://placehold.co/600x400/facc15/white?text=Fritas',
+    category: 'Acompanhamentos',
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ const menuItems = [
     description: 'Escolha entre as opções de refrigerante em lata (350ml).',
     price: 6.50,
     image: 'https://placehold.co/600x400/22d3ee/white?text=Refri',
+    category: 'Bebidas',
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ const menuItems = [
     description: 'Sorvete de baunilha cremoso com uma calda de caramelo irresistível e amendoim.',
     price: 15.00,
     image: 'https://placehold.co/600x400/a78bfa/white?text=Sundae',
+    category: 'Sobremesas',
   },
   {
     id: 5,
@@ -33,7 +37,72 @@ const menuItems = [
     description: '2 Gemini Burgers, 1 batata grande e 2 refrigerantes. Perfeito para dividir!',
     price: 65.00,
     image: 'https://placehold.co/600x400/ef4444/white?text=Combo',
+    category: 'Combos',
   },
+  {
+    id: 6,
+    name: 'Gemini Chicken Supreme',
+    description: 'Pão com gergelim, filé de frango empanado, queijo emental, bacon e molho de mostarda e mel.',
+    price: 22.90,
+    image: 'https://placehold.co/600x400/f97316/white?text=Chicken',
+    category: 'Hambúrgueres',
+  },
+  {
+    id: 7,
+    name: 'Onion Rings',
+    description: 'Anéis de cebola empanados e fritos, crocantes por fora e macios por dentro.',
+    price: 14.50,
+    image: 'https://placehold.co/600x400/facc15/white?text=Onion',
+    category: 'Acompanhamentos',
+  },
+  {
+    id: 8,
+    name: 'Milk Shake de Chocolate',
+    description: 'Milk shake cremoso feito com sorvete de chocolate belga e calda de chocolate.',
+    price: 18.00,
+    image: 'https://placehold.co/600x400/a78bfa/white?text=Shake',
+    category: 'Bebidas',
+  },
+  {
+    id: 9,
+    name: 'Cheesecake de Morango',
+    description: 'Fatia de cheesecake com calda de morango fresco e pedaços de fruta.',
+    price: 19.90,
+    image: 'https://placehold.co/600x400/f472b6/white?text=Cheesecake',
+    category: 'Sobremesas',
+  },
+  {
+    id: 10,
+    name: 'Combo Família',
+    description: '4 hambúrgueres, 2 porções grandes de batata, 1 onion rings e 4 bebidas.',
+    price: 120.00,
+    image: 'https://placehold.co/600x400/ef4444/white?text=Família',
+    category: 'Combos',
+  },
+  {
+    id: 11,
+    name: 'Gemini Veggie',
+    description: 'Hambúrguer de grão-de-bico, queijo vegano, alface, tomate e molho de ervas.',
+    price: 23.50,
+    image: 'https://placehold.co/600x400/16a34a/white?text=Veggie',
+    category: 'Hambúrgueres',
+  },
+  {
+    id: 12,
+    name: 'Nuggets de Frango',
+    description: '8 pedaços de frango empanado, crocantes e suculentos.',
+    price: 16.00,
+    image: 'https://placehold.co/600x400/facc15/white?text=Nuggets',
+    category: 'Acompanhamentos',
+  },
+  {
+    id: 13,
+    name: 'Água Mineral',
+    description: 'Garrafa de água mineral sem gás 500ml.',
+    price: 5.00,
+    image: 'https://placehold.co/600x400/22d3ee/white?text=Água',
+    category: 'Bebidas',
+  }
 ];
 
 export default menuItems;
