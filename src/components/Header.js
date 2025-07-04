@@ -28,7 +28,7 @@ const Header = () => {
         </Link>
       </div>
       <div className="relative">
-        <Link to="/"> {/* O carrinho agora está na HomePage, então o link vai para a raiz */}
+        <Link to="/carrinho">
           <div className={`relative p-2 rounded-full transition-colors duration-300 ${isAnimating ? 'shake-animation' : ''}`}>
             <ShoppingCartIcon />
             {totalItemsInCart > 0 && (

@@ -1,28 +1,31 @@
 import React, { useMemo } from 'react';
 import { useCart } from '../context/CartContext';
 import { TrashIcon, ShoppingCartIcon } from './icons';
-import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
-// --- Componente do Carrinho ---
-function Cart() { 
+function Cart() {
   const { cartItems, updateCart, removeFromCart } = useCart();
-    
+
   const { subtotal, total } = useMemo(() => {
     const sub = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const tax = sub > 0 ? 2.50 : 0; 
+    const tax = sub > 0 ? 2.50 : 0;
     return { subtotal: sub, total: sub + tax };
   }, [cartItems]);
 
   return (
-    <div className="lg:w-2/5 xl:w-1/3 w-full bg-gray-800 rounded-xl shadow-2xl p-6 sticky top-8">
+    <div className="w-full bg-gray-800 rounded-xl shadow-2xl p-6 lg:p-8">
       <div className="flex items-center mb-6">
         <ShoppingCartIcon />
-        <h2 className="text-2xl font-bold text-white ml-3">Seu Pedido</h2>
+        <h2 className="text-2xl font-bold text-white ml-3">Resumo do Pedido</h2>
       </div>
-      
+
       {cartItems.length === 0 ? (
-        <p className="text-gray-400 text-center py-10">Seu carrinho está vazio.</p>
+        <div className="text-center py-10">
+          <p className="text-gray-400 text-lg mb-4">Seu carrinho está vazio.</p>
+          <Link to="/" className="bg-yellow-500 text-gray-900 font-bold py-2 px-6 rounded-lg hover:bg-yellow-400 transition-colors duration-300">
+            Ver Cardápio
+          </Link>
+        </div>
       ) : (
         <>
           <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
@@ -64,11 +67,11 @@ function Cart() {
             </div>
           </div>
 
-          <Link 
+          <Link
             to="/checkout"
             className="w-full mt-6 bg-green-600 text-white font-bold py-3 rounded-lg text-lg hover:bg-green-500 transition-colors duration-300 block text-center"
           >
-            Finalizar Pedido
+            Ir para o Checkout
           </Link>
         </>
       )}

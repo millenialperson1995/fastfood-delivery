@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import MenuItemCard from '../components/MenuItemCard';
-import Cart from '../components/Cart';
 import menuItems from '../data/menu';
 
 const HomePage = () => {
@@ -18,9 +17,9 @@ const HomePage = () => {
   }, [searchTerm]);
 
   return (
-    <main className="flex flex-col lg:flex-row gap-12">
+    <main className="flex flex-col">
       {/* Coluna do Cardápio */}
-      <div className="flex-1">
+      <div className="w-full">
         <h2 className="text-3xl font-bold text-white mb-6">Nosso Cardápio</h2>
         <div className="mb-6">
           <input
@@ -31,7 +30,7 @@ const HomePage = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {filteredMenuItems.length > 0 ? (
             filteredMenuItems.map(item => (
               <MenuItemCard key={item.id} item={item} />
@@ -41,9 +40,6 @@ const HomePage = () => {
           )}
         </div>
       </div>
-
-      {/* Coluna do Carrinho */}
-      <Cart />
     </main>
   );
 };
