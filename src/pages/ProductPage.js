@@ -3,10 +3,11 @@ import { useParams, Link } from 'react-router-dom';
 import menuItems from '../data/menu';
 import { useCart } from '../context/CartContext';
 import MenuItemCard from '../components/MenuItemCard';
+import Button from '../components/Button'; // Importa o novo componente
 
 const ProductPage = () => {
   const { id } = useParams();
-  const { addToCart, updateCart } = useCart(); // Adicionando updateCart
+  const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
 
   const item = menuItems.find(item => item.id === parseInt(id));
@@ -15,7 +16,7 @@ const ProductPage = () => {
     if (!item) return [];
     return menuItems.filter(
       relatedItem => relatedItem.category === item.category && relatedItem.id !== item.id
-    ).slice(0, 4); // Limita a 4 itens relacionados
+    ).slice(0, 4);
   }, [item]);
 
 
@@ -66,12 +67,10 @@ const ProductPage = () => {
               <button onClick={() => handleQuantityChange(1)} className="px-4 py-2 text-lg font-bold text-white hover:bg-gray-600 rounded-r-full">+</button>
             </div>
           </div>
-          <button
-            onClick={handleAddToCart}
-            className="w-full md:w-auto bg-yellow-500 text-gray-900 font-bold py-3 px-10 rounded-lg text-lg hover:bg-yellow-400 transition-colors duration-300"
-          >
+          {/* Usando o novo componente Button */}
+          <Button onClick={handleAddToCart} className="w-full md:w-auto text-lg px-10 py-3">
             Adicionar ao Carrinho
-          </button>
+          </Button>
            <div className="mt-8">
              <Link to="/" className="text-yellow-400 hover:text-yellow-300">
                 &larr; Voltar ao Cardápio
@@ -79,7 +78,6 @@ const ProductPage = () => {
            </div>
         </div>
       </div>
-      {/* Seção de Produtos Relacionados */}
       {relatedItems.length > 0 && (
         <div className="mt-20">
           <h2 className="text-3xl font-bold text-white mb-6">Você também pode gostar</h2>

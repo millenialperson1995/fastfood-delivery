@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import Button from './Button'; // Importa o novo componente
 
 function MenuItemCard({ item }) {
   const { addToCart } = useCart();
@@ -10,16 +11,14 @@ function MenuItemCard({ item }) {
     e.preventDefault();
     e.stopPropagation();
     addToCart(item);
-
-    // Inicia a animação
+    
     setIsFlying(true);
-    setTimeout(() => {
-      setIsFlying(false);
-    }, 700); // Duração da animação
+    setTimeout(() => setIsFlying(false), 700);
   };
 
   return (
-    <Link to={`/produto/${item.id}`} className="block bg-gray-800 rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
+    // Usando a nova classe .card-base
+    <Link to={`/produto/${item.id}`} className="card-base">
       <div className="relative">
         {isFlying && (
           <div className="fly-to-cart-animation">
@@ -44,12 +43,10 @@ function MenuItemCard({ item }) {
           <p className="text-2xl font-black text-yellow-400">
             R$ {item.price.toFixed(2).replace('.', ',')}
           </p>
-          <button
-            onClick={handleAddToCart}
-            className="bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded-lg hover:bg-yellow-400 transition-colors duration-300 z-10 relative"
-          >
+          {/* Usando o novo componente Button */}
+          <Button onClick={handleAddToCart} className="z-10 relative">
             Adicionar
-          </button>
+          </Button>
         </div>
       </div>
     </Link>
